@@ -9,7 +9,7 @@ const Login = () => {
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
   const currentUser = useContext(AuthContext)
-  console.log(currentUser)
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
