@@ -10,7 +10,7 @@ function Chat() {
       <div className="chatInfo">
         <span>Jane</span>
         <div className="ChatIcons">
-        <AiOutlineUserAdd size={25}/>
+        <i className="fa fa-info"/>
         <MdOutlineVideoCameraFront size={25}/>
         <BiDotsVerticalRounded size={25}/>
          </div>
