@@ -13,6 +13,7 @@ export const ChatContextProvider = ({ children }) => {
     chatId: "null",
     user: {},
   };
+ 
 
   const chatReducer = (state, action) => {
     switch (action.type) {
@@ -31,7 +32,7 @@ export const ChatContextProvider = ({ children }) => {
   };
 
   const [state, dispatch] = useReducer(chatReducer, INITIAL_STATE);
-
+  console.log(state)
   return (
     <ChatContext.Provider value={{ data: state, dispatch }}>
       {children}
