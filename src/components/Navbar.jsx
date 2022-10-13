@@ -10,7 +10,7 @@ function Navbar() {
     const {currentUser} = useContext(AuthContext)
   return (
     <div className='navbar'>
-        <span className='logo'>Quick Chat</span>
+        <span className='logo'>Swifter Chat</span>
         <div className='user'>
             <img src={currentUser?.photoURL}/>
             <span>{currentUser?.displayName}</span>
