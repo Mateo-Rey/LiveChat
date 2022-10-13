@@ -6,11 +6,10 @@ import { db } from "../firebase";
 
 const Chats = () => {
   const [chats, setChats] = useState([]);
-  console.log(Object.entries(chats))
 
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
-
+  (!currentUser && (<div>Loading</div>))
   useEffect(() => {
     const getChats = () => {
       const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
