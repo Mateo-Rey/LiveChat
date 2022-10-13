@@ -6,7 +6,6 @@ export const ProtectedRoute = ({ children }) => {
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  console.log(currentUser)
 
   if (!currentUser) {
     return navigate("/login");

@@ -17,7 +17,6 @@ const Search = () => {
   const [user, setUser] = useState(null);
   const [err, setErr] = useState(false);
   const {currentUser}  = useContext(AuthContext);
-  console.log(username, user, currentUser.uid)
 
   
 
