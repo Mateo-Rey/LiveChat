@@ -15,14 +15,14 @@
   }
   
   .formContainer {
-    background-color: #B4D2E7;
+    background-color: #586994;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
   
     .formWrapper {
-      background-color: white;
+      background-color: #F8F8F8;
       padding: 20px 60px;
       border-radius: 10px;
       display: flex;
@@ -52,6 +52,8 @@
           border: none;
           width: 250px;
           border-bottom: 1px solid #a7bcff;
+          border-right: 1px solid #a7bcff;
+          outline: none;
           &::placeholder {
             color: rgb(175, 175, 175);
           }
@@ -88,7 +90,7 @@
   }
   
   .home {
-    background-color: #a7bcff;
+    background-color: #586994;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -107,13 +109,13 @@
   
       .sidebar {
         flex: 1;
-        background-color: #3e3c61;
+        background-color: #565264;
         position: relative;
   
         .navbar {
           display: flex;
           align-items: center;
-          background-color: #2f2d52;
+          background-color: #706677;
           height: 50px;
           padding: 10px;
           justify-content: space-between;
@@ -139,9 +141,10 @@
             }
   
             button {
-              background-color: #5d5b8d;
-              color: #ddddf7;
-              font-size: 10px;
+              background-color: #351E29;
+              color: white;
+              font-size: 12px;
+              font-weight: bold;
               border: none;
               cursor: pointer;
               @include tablet {
@@ -206,7 +209,7 @@
   
         .chatInfo {
           height: 50px;
-          background-color: #5d5b8d;
+          background-color: #565264;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -225,7 +228,7 @@
         }
   
         .messages {
-          background-color: #ddddf7;
+          background-color: #F8F8F8;
           padding: 10px;
           height: calc(100% - 160px);
           overflow: scroll;

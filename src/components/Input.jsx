@@ -73,6 +73,10 @@ const Input = () => {
     setText("");
     setImg(null);
   };
+
+  const handleKeyDown = (e) => {
+    console.log(e.key)
+  }
   return (
     <div className="input">
       <input
@@ -82,16 +86,13 @@ const Input = () => {
         value={text}
       />
       <div className="send">
-       <IoIosAttach/>
         <input
           type="file"
           style={{ display: "none" }}
           id="file"
           onChange={(e) => setImg(e.target.files[0])}
         />
-        <label htmlFor="file">
-          <BsImage/>
-        </label>
+        <BsImage/>
         <button onClick={handleSend}>Send</button>
       </div>
     </div>
