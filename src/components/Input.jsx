@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
+import {BsImage} from 'react-icons/bs'
+import {IoIosAttach} from 'react-icons/io'
 import { AuthContext } from "../contexts/AuthContext";
 import { ChatContext } from "../contexts/ChatContext";
-import {IoIosAttach} from 'react-icons/io'
-import {BsImage} from 'react-icons/bs'
 import {
   arrayUnion,
   doc,
@@ -20,7 +20,7 @@ const Input = () => {
 
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
-  console.log(data.user)
+
   const handleSend = async () => {
     if (img) {
       const storageRef = ref(storage, uuid());
@@ -28,6 +28,9 @@ const Input = () => {
       const uploadTask = uploadBytesResumable(storageRef, img);
 
       uploadTask.on(
+        (error) => {
+          //TODO:Handle Error
+        },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
             await updateDoc(doc(db, "chats", data.chatId), {
@@ -79,7 +82,7 @@ const Input = () => {
         value={text}
       />
       <div className="send">
-        <IoIosAttach/>
+       <IoIosAttach/>
         <input
           type="file"
           style={{ display: "none" }}
