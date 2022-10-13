@@ -8,7 +8,7 @@ import { AuthContext } from "../contexts/AuthContext";
 const Login = () => {
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
-  const currentUser = useContext(AuthContext)
+  const {currentUser} = useContext(AuthContext)
   
 
   const handleSubmit = async (e) => {
