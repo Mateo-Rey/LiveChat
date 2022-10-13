@@ -1,48 +1,98 @@
-import React, {useContext, useState} from 'react'
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+import { ChatContext } from "../contexts/ChatContext";
 import {IoIosAttach} from 'react-icons/io'
 import {BsImage} from 'react-icons/bs'
-import { AuthContext } from '../contexts/AuthContext'
-import { ChatContext } from '../contexts/ChatContext'
-import { updateDoc, doc, arrayUnion, Timestamp } from 'firebase/firestore'
-import { v4 as uuid } from 'uuid'
-function Input() {
-  const [text, setText] = useState("")
+import {
+  arrayUnion,
+  doc,
+  serverTimestamp,
+  Timestamp,
+  updateDoc,
+} from "firebase/firestore";
+import { db, storage } from "../firebase";
+import { v4 as uuid } from "uuid";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+
+const Input = () => {
+  const [text, setText] = useState("");
   const [img, setImg] = useState(null);
 
-  const {currentUser} = useContext(AuthContext)
-  const {data} = useContext(ChatContext)
-
+  const { currentUser } = useContext(AuthContext);
+  const { data } = useContext(ChatContext);
+  console.log(data.user)
   const handleSend = async () => {
-    if(img) {
+    if (img) {
+      const storageRef = ref(storage, uuid());
 
+      const uploadTask = uploadBytesResumable(storageRef, img);
+
+      uploadTask.on(
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            await updateDoc(doc(db, "chats", data.chatId), {
+              messages: arrayUnion({
+                id: uuid(),
+                text,
+                senderId: currentUser.uid,
+                date: Timestamp.now(),
+                img: downloadURL,
+              }),
+            });
+          });
+        }
+      );
     } else {
       await updateDoc(doc(db, "chats", data.chatId), {
         messages: arrayUnion({
-          id: uuid,
+          id: uuid(),
           text,
           senderId: currentUser.uid,
           date: Timestamp.now(),
-        })
-      })
+        }),
+      });
     }
-  }
-  return (
-    <div className='input'>
-        <input type='text' placeholder='Say something...' onChange={(e) => setText(e.target.value)} />
-        <div className='send'>
-            <div className='img'>
-            <IoIosAttach  size={28}/>
-            </div>
-            <input type='file' style={{display:'none'}} id='file' onChange={(e) => setImg(e.target.files[0])} />
-            <label htmlFor='file'>
-                <div className='img'>
-            <BsImage  size={28}/>
-            </div>
-            </label>
-            <button>Send</button>
-        </div>
-    </div>
-  )
-}
 
-export default Input
+    await updateDoc(doc(db, "userChats", currentUser.uid), {
+      [data.chatId + ".lastMessage"]: {
+        text,
+      },
+      [data.chatId + ".date"]: serverTimestamp(),
+    });
+
+    await updateDoc(doc(db, "userChats", data.user.uid), {
+      [data.chatId + ".lastMessage"]: {
+        text,
+      },
+      [data.chatId + ".date"]: serverTimestamp(),
+    });
+
+    setText("");
+    setImg(null);
+  };
+  return (
+    <div className="input">
+      <input
+        type="text"
+        placeholder="Type something..."
+        onChange={(e) => setText(e.target.value)}
+        value={text}
+      />
+      <div className="send">
+        <IoIosAttach/>
+        <input
+          type="file"
+          style={{ display: "none" }}
+          id="file"
+          onChange={(e) => setImg(e.target.files[0])}
+        />
+        <label htmlFor="file">
+          <BsImage/>
+        </label>
+        <button onClick={handleSend}>Send</button>
+      </div>
+    </div>
+  );
+};
+
+export default Input;
