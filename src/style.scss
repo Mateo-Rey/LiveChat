@@ -159,10 +159,6 @@
             font-weight: bold;
             border: none;
             cursor: pointer;
-            @include tablet {
-              position: absolute;
-              bottom: 10px;
-            }
           }
         }
       }
@@ -218,6 +214,7 @@
     }
     .chat {
       flex: 2;
+      overflow-y: scroll;
 
       .createGroupChat {
         display: flex;

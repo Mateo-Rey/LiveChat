@@ -71,7 +71,7 @@ function Chat() {
     <div className="chat">
       <div className="chatInfo">
         <span>{data?.user?.displayName}</span>
-        <div className="createGroupChat">
+        {/* <div className="createGroupChat">
         <span>
           Selcted users:{" "}
           {userList.map((user) => {
@@ -88,7 +88,7 @@ function Chat() {
         <button onClick={createGroupChat}>
           <AiOutlineUserAdd size={28} />
         </button>
-        </div>
+        </div> */}
       </div>
       
       

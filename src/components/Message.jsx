@@ -13,8 +13,6 @@ const Message = ({ message }) => {
   }, [message]);
   const curDate = new Date(null);
   curDate.setSeconds(message.date.seconds)
-  
-  console.log(curDate)
 
   return (
     <div
