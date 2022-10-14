@@ -3,14 +3,13 @@ import {ImBoxAdd} from 'react-icons/im'
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDocs, onSnapshot, query, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 
-const Register = () => {
+const Register = async () => {
   const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -18,9 +17,8 @@ const Register = () => {
     const email = e.target[1].value;
     const password = e.target[2].value;
     const file = e.target[3].files[0];
-    if (doc(db, "users",displayName).exists()) {
-      return setErr("Name is already in use")
-    }
+    
+  
     try {
       //Create user
       const res = await createUserWithEmailAndPassword(auth, email, password);

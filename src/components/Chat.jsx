@@ -35,12 +35,14 @@ function Chat() {
       const date = new Date().getTime();
       const storageRef = ref(storage, `${currentUser.displayName + date}`);
       const uploadTask = uploadBytesResumable(storageRef, avatar)
-      
 
       await uploadTask.then(() => {
         getDownloadURL(storageRef).then( async (downloadURL) => {
-            updateProfile(currentUser, {photoURL: downloadURL})
-          });
+            await updateProfile(currentUser, {photoURL: downloadURL})
+            await updateDoc(doc(db, "users", currentUser.uid), {
+              photoURL: downloadURL
+            })
+          })  
         })
       
     

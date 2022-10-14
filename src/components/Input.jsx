@@ -26,10 +26,13 @@ const Input = () => {
       const storageRef = ref(storage, uuid());
 
       const uploadTask = uploadBytesResumable(storageRef, img);
-
+      const findDownloadURL = await getDownloadURL(uploadTask.snapshot.ref)
       uploadTask.on(
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+        (error) => {
+          //TODO:Handle Error
+        },
+        async ()  => {
+          findDownloadURL.then(setInterval(async (downloadURL) => {
             await updateDoc(doc(db, "chats", data.chatId), {
               messages: arrayUnion({
                 id: uuid(),
@@ -38,8 +41,8 @@ const Input = () => {
                 date: Timestamp.now(),
                 img: downloadURL,
               }),
-            });
-          });
+            }).catch((err) => console.log(err))
+          }, 5000));
         }
       );
     } else {
@@ -92,7 +95,7 @@ const Input = () => {
           id="file"
           onChange={(e) => setImg(e.target.files[0])}
         />
-        <label htmlFor="file"> <BsImage/></label>
+        <label htmlFor="file"><BsImage/></label>
         
         
         <button onClick={handleSend}>Send</button>

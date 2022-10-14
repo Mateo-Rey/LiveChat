@@ -31,7 +31,7 @@ const Message = ({ message }) => {
         <span>{curDate.toDateString().slice(0,11)} {curDate.toTimeString().slice(0,5)}</span>
       </div>
       <div className="messageContent">
-        <p>{message.text}</p>
+        <p>{message.text && message.text}</p>
         {message.img && <img src={message.img} alt="" />}
       </div>
     </div>
