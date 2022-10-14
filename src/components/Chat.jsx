@@ -1,7 +1,5 @@
 import React from "react";
-import { AiOutlineUserAdd } from "react-icons/ai";
-import { MdOutlineVideoCameraFront } from "react-icons/md";
-import { BiDotsVerticalRounded } from "react-icons/bi";
+import { updateProfile } from "firebase/auth";
 import {
   query,
   collection,
@@ -12,6 +10,8 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
+import { storage } from "../firebase";
+import { uploadBytesResumable, getDownloadURL, ref } from "firebase/storage";
 import { db } from "../firebase";
 import Messages from "./Messages";
 import Input from "./Input";
@@ -26,10 +26,29 @@ function Chat() {
   const [err, setErr] = useState(false);
   const [username, setUsername] = useState("");
   const {currentUser} = useContext(AuthContext)
+  const [avatar, setAvatar] = useState();
+  const [loading, setLoading] = useState(false);
+  const handleAvatarChange = async () => {
+    
 
-  const handleKey = (e) => {
-    e.code === "Enter" && handleSearch();
-  };
+      //Create a unique image name
+      const date = new Date().getTime();
+      const storageRef = ref(storage, `${currentUser.displayName + date}`);
+      const uploadTask = uploadBytesResumable(storageRef, avatar)
+      
+
+      await uploadTask.then(() => {
+        getDownloadURL(storageRef).then( async (downloadURL) => {
+            updateProfile(currentUser, {photoURL: downloadURL})
+          });
+        })
+      
+    
+  }
+
+  function handleKey(e) {
+  e.code === "Enter" && handleSearch();
+}
  
       
   const createGroupChat = async () => {
@@ -71,6 +90,9 @@ function Chat() {
     <div className="chat">
       <div className="chatInfo">
         <span>{data?.user?.displayName}</span>
+        <input className="avatarInput" type='file' id='avatarChange' onChange={(e) => setAvatar(e.target.files[0])}/>
+        <label htmlFor="avatarChange">Change Avatar</label>
+        <button onClick={handleAvatarChange}>Update Avatar</button>
         {/* <div className="createGroupChat">
         <span>
           Selcted users:{" "}

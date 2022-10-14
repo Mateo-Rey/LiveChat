@@ -12,7 +12,7 @@ function Navbar() {
     <div className='navbar'>
         <span className='logo'>Swifter Chat</span>
         <div className='user'>
-            <img src={currentUser?.photoURL}/>
+            <img src={currentUser.photoURL}/>
             <span>{currentUser?.displayName}</span>
             <button onClick={() => signOut(auth) && navigate("/login")}>Logout</button>
         </div>

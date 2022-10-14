@@ -225,6 +225,10 @@
       flex: 1;
       overflow-y: scroll;
 
+      .avatarInput {
+        display: none;
+      }
+
       .createGroupChat {
         display: flex;
         width: 30rem;
