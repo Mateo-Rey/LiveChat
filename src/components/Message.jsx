@@ -11,8 +11,10 @@ const Message = ({ message }) => {
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
-
+  const curDate = new Date(null);
+  curDate.setSeconds(message.date.seconds)
   
+  console.log(curDate)
 
   return (
     <div
@@ -28,7 +30,7 @@ const Message = ({ message }) => {
           }
           alt=""
         />
-        <span>{Date(message.date).slice(0,21)}</span>
+        <span>{curDate.toDateString().slice(0,11)} {curDate.toTimeString().slice(0,5)}</span>
       </div>
       <div className="messageContent">
         <p>{message.text}</p>

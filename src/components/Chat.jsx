@@ -39,13 +39,15 @@ function Chat() {
     })
     .join("-");
 
-    const groupChatId = ids + '-' + currentUser.uid
+    const combinedId = ids + '-' + currentUser.uid
 
-    const res = await getDocs(doc(db, "groupChats", groupChatId))
+    const res = await getDocs(doc(db, "groupChats", combinedId))
     if (!res.exists()) {
-    setDoc(doc(db, "groupChats", groupChatId));
+    setDoc(doc(db, "groupChats", combinedId));
     } else {
-      updateDoc(doc(db, "groupChats", groupChatId), )
+      updateDoc(doc(db, "groupChats", combinedId), {
+        
+      } )
     }
   };
 
@@ -69,25 +71,30 @@ function Chat() {
     <div className="chat">
       <div className="chatInfo">
         <span>{data?.user?.displayName}</span>
-        {/* <span>
+        <div className="createGroupChat">
+        <span>
           Selcted users:{" "}
           {userList.map((user) => {
             return <p key={user.displayName}>{user.displayName}</p>;
           })}
-        </span> */}
-        {/* <input
+        </span>
+        <input
           type="text"
           value={username}
           placeholder="Add a friend..."
           onKeyDown={handleKey}
           onChange={(e) => setUsername(e.target.value)}
-        /> */}
+        />
         <button onClick={createGroupChat}>
           <AiOutlineUserAdd size={28} />
         </button>
+        </div>
       </div>
+      
+      
       <Messages />
       <Input />
+      
     </div>
   );
 }
