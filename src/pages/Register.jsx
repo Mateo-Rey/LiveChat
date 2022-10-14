@@ -69,7 +69,7 @@ const Register = () => {
           <input required type="email" placeholder="email" />
           <input required type="password" placeholder="password" />
           <input required style={{ display: "none" }} type="file" id="file" />
-          <label htmlFor="file">
+          <label className="dropbox" htmlFor="file">
             <ImBoxAdd/>
             <span>Add an avatar</span>
           </label>
