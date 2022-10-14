@@ -18,7 +18,9 @@ const Register = () => {
     const email = e.target[1].value;
     const password = e.target[2].value;
     const file = e.target[3].files[0];
-
+    if (doc(db, "users",displayName).exists()) {
+      return setErr("Name is already in use")
+    }
     try {
       //Create user
       const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -75,7 +77,7 @@ const Register = () => {
           </label>
           <button disabled={loading}>Sign up</button>
           {loading && "Uploading and compressing the image please wait..."}
-          {err && <span>Something went wrong</span>}
+          {err && <span>Something went wrong: {err}</span>}
         </form>
         <p>
           You do have an account? <Link to="/login">Login</Link>
