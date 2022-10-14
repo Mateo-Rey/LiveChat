@@ -10,7 +10,7 @@ function Home() {
 
   if (!currentUser) (window.location.reload(false))
   return (
-    <div className='home'>
+    <div className='home '>
         <div className='container'>
         <Sidebar/>
         <Chat/>

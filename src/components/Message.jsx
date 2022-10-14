@@ -12,6 +12,8 @@ const Message = ({ message }) => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
 
+  
+
   return (
     <div
       ref={ref}
@@ -26,7 +28,7 @@ const Message = ({ message }) => {
           }
           alt=""
         />
-        <span>just now</span>
+        <span>{Date(message.date).slice(0,21)}</span>
       </div>
       <div className="messageContent">
         <p>{message.text}</p>

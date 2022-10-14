@@ -75,13 +75,14 @@ const Input = () => {
   };
 
   const handleKeyDown = (e) => {
-    console.log(e.key)
+    if(e.code === "Enter") (handleSend())
   }
   return (
     <div className="input">
       <input
         type="text"
         placeholder="Type something..."
+        onKeyDown={handleKeyDown}
         onChange={(e) => setText(e.target.value)}
         value={text}
       />
